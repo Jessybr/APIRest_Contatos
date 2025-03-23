@@ -109,6 +109,9 @@ public class ContactController {
         return ResponseEntity.ok(contacts);
     }
     
+    /*
+     * Método para alterar apenas parte de um contato
+     * */
     @PatchMapping("/{id}")
     public ResponseEntity<Contact> editContactById(@PathVariable("id") Long id, @RequestBody Contact updatedContact) {
         Contact existingContact = contactRepository.findById(id)
