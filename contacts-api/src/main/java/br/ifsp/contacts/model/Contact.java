@@ -1,9 +1,13 @@
 package br.ifsp.contacts.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 /**
  * Classe que representa o modelo de dados para um Contato.
@@ -25,6 +29,14 @@ public class Contact {
     private String nome;
     private String telefone;
     private String email;
+    
+    /*
+     * @OneToMany(mappedBy = "contact"): Indica que um contato pode ter vários endereços.
+     * cascade = CascadeType.ALL: Faz com que ao remover um contato, seus endereços também sejam removidos automaticamente.
+     * orphanRemoval = true: Remove automaticamente endereços que não estão mais associados a um contato.
+     * */
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
 
     // Construtor vazio exigido pelo JPA
     public Contact() {}
@@ -61,4 +73,11 @@ public class Contact {
     public void setEmail(String email) {
         this.email = email;
     }
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+    
 }

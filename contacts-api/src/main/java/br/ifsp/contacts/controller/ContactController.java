@@ -113,7 +113,7 @@ public class ContactController {
      * Método para alterar apenas parte de um contato
      * */
     @PatchMapping("/{id}")
-    public ResponseEntity<Contact> editContactById(@PathVariable("id") Long id, @RequestBody Contact updatedContact) {
+    public ResponseEntity<Contact> updateContactPartially(@PathVariable("id") Long id, @RequestBody Contact updatedContact) {
         Contact existingContact = contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contato não encontrado: " + id));
 
