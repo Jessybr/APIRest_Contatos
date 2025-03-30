@@ -10,6 +10,5 @@ import br.ifsp.contacts.model.Address;
 
 public interface AddressRepository extends JpaRepository<Address, Long>{
 	
-	@Query("SELECT a FROM Address a WHERE a.contact.id = :contactId")
-	List<Address> findByContactId(@Param("contactId") Long contactId);
+	List<Address> findByContactId(Long contactId);
 }

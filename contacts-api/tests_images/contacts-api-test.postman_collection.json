@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "a080a445-63a6-46cc-b637-acd80889c166",
+		"name": "contacts-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33324887"
+	},
+	"item": [
+		{
+			"name": "NullContact",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"João Silva\",\r\n  \"email\": \"joao.silva@email.com\",\r\n  \"telefone\": \"11999999999\",\r\n  \"addresses\": [\r\n    {\r\n      \"rua\": \"Rua A\",\r\n      \"cidade\": \"São Paulo\",\r\n      \"estado\": \"SP\",\r\n      \"cep\": \"12345-678\"\r\n    },\r\n    {\r\n      \"rua\": \"Rua B\",\r\n      \"cidade\": \"São Paulo\",\r\n      \"estado\": \"SP\",\r\n      \"cep\": \"12345-690\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/contacts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contacts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContactById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InvalidContact",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts/5",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddressByContactId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rua\": \"Rua B\",\r\n  \"cidade\": \"Rio de Janeiro\",\r\n  \"estado\": \"RJ\",\r\n  \"cep\": \"22222-222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/addresses/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addresses",
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addresses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/addresses",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddressByContactId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/addresses/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addresses",
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContactById",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"João Silva Jr.\",\r\n  \"telefone\": \"11988888888\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContactByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts/search?name=João",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "João"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContactInvalid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"\",\r\n  \"email\": \"invalidEmail\",\r\n  \"telefone\": \"123\",\r\n  \"addresses\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/contacts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddressInvalid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rua\": \"Rua B\",\r\n  \"cidade\": \"Rio de Janeiro\",\r\n  \"estado\": \"Rio J\",\r\n  \"cep\": \"22222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/addresses/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addresses",
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContactById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contacts/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080/api",
+			"type": "default"
+		}
+	]
+}
