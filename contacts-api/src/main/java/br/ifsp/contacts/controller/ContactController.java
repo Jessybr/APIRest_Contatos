@@ -1,9 +1,14 @@
 package br.ifsp.contacts.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ifsp.contacts.dto.contacts.ContactCreateDTO;
+import br.ifsp.contacts.dto.contacts.ContactReadDTO;
+import br.ifsp.contacts.dto.contacts.ContactUpdateDTO;
 import br.ifsp.contacts.exception.ResourceNotFoundException;
 import br.ifsp.contacts.model.Contact;
 import br.ifsp.contacts.repository.ContactRepository;
@@ -32,55 +40,86 @@ public class ContactController {
     private ContactRepository contactRepository;
 
     @GetMapping
-    public List<Contact> getAllContacts() {
-        return contactRepository.findAll();
+    public Page<ContactReadDTO> getAllContacts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sort) {
+        
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        
+        Page<Contact> contactPage = contactRepository.findAll(pageable);
+        
+        Page<ContactReadDTO> dtoPage = contactPage.map(contact -> {
+            ContactReadDTO dto = new ContactReadDTO();
+            dto.convertContactToDTO(contact);
+            return dto;
+        });
+        
+        return dtoPage;
     }
 
     @GetMapping("{id}")
-    public Contact getContactById(@PathVariable Long id) {
-        return contactRepository.findById(id)
+    public ContactReadDTO getContactById(@PathVariable Long id) {
+    	Contact contact = new Contact();
+    	ContactReadDTO contactDTO = new ContactReadDTO();
+    	
+    	contact = contactRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado: " + id));
+    	
+    	contactDTO.convertContactToDTO(contact);
+    	return contactDTO;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact createContact(@Valid @RequestBody Contact contact) {
-        return contactRepository.save(contact);
+    public ContactCreateDTO createContact(@Valid @RequestBody ContactCreateDTO contactDTO) {
+    	Contact contact = new Contact();
+    	contact.convertDTOInsertToContact(contactDTO);
+        contactRepository.save(contact);
+        contactDTO.convertContactToDTO(contact);
+        
+        return contactDTO;
     }
-
+ 
     @PutMapping("/{id}")
-    public Contact updateContact(@PathVariable Long id, @Valid @RequestBody Contact updatedContact) {
+    public ContactUpdateDTO updateContact(@PathVariable Long id, @Valid @RequestBody ContactUpdateDTO updatedContactDTO) {
         Contact existingContact = contactRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado: " + id));
 
-        existingContact.setNome(updatedContact.getNome());
-        existingContact.setEmail(updatedContact.getEmail());
-        existingContact.setTelefone(updatedContact.getTelefone());
-        existingContact.setAddresses(updatedContact.getAddresses());
+        existingContact.convertDTOUpdateToContact(updatedContactDTO);
+        contactRepository.save(existingContact);
+        updatedContactDTO.convertContactToDTO(existingContact);
 
-        return contactRepository.save(existingContact);
+        return updatedContactDTO;
     }
 
     @PatchMapping("/{id}")
-    public Contact updateContactPartial(@PathVariable Long id, @RequestBody Map<String, String> updates) {
+    public ContactUpdateDTO updateContactPartial(@PathVariable Long id, @RequestBody Map<String, String> updates) {
         Contact contact = contactRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado: " + id));
+        
+        ContactUpdateDTO contactUpdate = new ContactUpdateDTO();
+        contactUpdate.convertContactToDTO(contact);
 
         updates.forEach((key, value) -> {
             switch (key) {
                 case "nome":
-                    contact.setNome(value);
+                	contactUpdate.setNome(value);
                     break;
                 case "telefone":
-                    contact.setTelefone(value);
+                	contactUpdate.setTelefone(value);
                     break;
                 case "email":
-                    contact.setEmail(value);
+                	contactUpdate.setEmail(value);
                     break;
             }
         });
+        
+        contact.convertDTOUpdateToContact(contactUpdate);
+        contactRepository.save(contact);
+        contactUpdate.convertContactToDTO(contact);
 
-        return contactRepository.save(contact);
+        return contactUpdate;
     }
 
     @DeleteMapping("/{id}")
@@ -89,7 +128,21 @@ public class ContactController {
     }
 
     @GetMapping("/search")
-    public List<Contact> searchContactsByName(@RequestParam String name) {
-        return contactRepository.findByNomeContainingIgnoreCase(name);
+    public Page<ContactReadDTO> searchContactsByName(
+    		@RequestParam String name,
+    		@RequestParam(defaultValue = "0") int page,
+    		@RequestParam(defaultValue = "10") int size,
+    		@RequestParam(defaultValue = "id") String sort) {
+    	
+    	Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+    	Page<Contact> contactList = contactRepository.findByNomeContainingIgnoreCase(name, pageable);
+    	
+    	Page<ContactReadDTO> dtoPage = contactList.map(contact -> {
+            ContactReadDTO dto = new ContactReadDTO();
+            dto.convertContactToDTO(contact);
+            return dto;
+        });
+        
+        return dtoPage;
     }
 }

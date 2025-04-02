@@ -1,0 +1,14 @@
+br\ifsp\contacts\controller\ContactController.class
+br\ifsp\contacts\dto\address\AddressReadDTO.class
+br\ifsp\contacts\exception\ResourceNotFoundException.class
+br\ifsp\contacts\dto\address\AddressCreateDTO.class
+br\ifsp\contacts\dto\contacts\ContactUpdateDTO.class
+br\ifsp\contacts\repository\ContactRepository.class
+br\ifsp\contacts\dto\contacts\ContactCreateDTO.class
+br\ifsp\contacts\ContactsApiApplication.class
+br\ifsp\contacts\dto\contacts\ContactReadDTO.class
+br\ifsp\contacts\exception\GlobalExceptionHandler.class
+br\ifsp\contacts\controller\AddressController.class
+br\ifsp\contacts\model\Address.class
+br\ifsp\contacts\repository\AddressRepository.class
+br\ifsp\contacts\model\Contact.class

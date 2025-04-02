@@ -1,40 +1,41 @@
 package br.ifsp.contacts.model;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.ifsp.contacts.dto.address.AddressCreateDTO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Table;
 
 /*
  * Classe usada como modelo para Endereços
  * */
 @Entity
+@Table(name = "addresses")
 public class Address {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	@NotBlank(message="O campo da rua não deve estar vazio")
+    @Column(name = "rua", nullable = false, length = 255)
 	private String rua;
-	
-	@NotBlank(message="O campo da cidade não deve estar vazio")
+
+    @Column(name = "cidade", nullable = false, length = 255)
 	private String cidade;
-	
-	@NotBlank(message="O campo do estado não deve estar vazio")
-	@Size(min=2, max=2, message="O campo de estado deve ter apenas a sigla do estado (duas letras)")
-	@Pattern(regexp="[A-Z]{2}", message="O campo de estado deve estar em letras maiúscula")
+
+    @Column(name = "estado", nullable = false, length = 2)
 	private String estado;
-	
-	@NotBlank(message="O campo do cep não deve estar vazio")
-    @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve estar no formato 99999-999")
+
+    @Column(name = "cep", nullable = false, length = 9)
 	private String cep;
 	
 	@ManyToOne
@@ -51,6 +52,10 @@ public class Address {
 		this.cep = cep;
 		this.contact = contact;
 	}
+	
+    public void convertDTOInsertToAddress(AddressCreateDTO addressDTO) {
+    	BeanUtils.copyProperties(addressDTO, this);
+    }
 
 	public Long getId() {
 		return id;
