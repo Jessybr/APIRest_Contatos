@@ -1,11 +1,7 @@
 package br.ifsp.contacts.model;
 
-import org.springframework.beans.BeanUtils;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import br.ifsp.contacts.dto.address.AddressCreateDTO;
-import br.ifsp.contacts.dto.address.AddressReadDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,14 +49,6 @@ public class Address {
 		this.cep = cep;
 		this.contact = contact;
 	}
-	
-    public void convertDTOInsertToAddress(AddressCreateDTO addressDTO) {
-    	BeanUtils.copyProperties(addressDTO, this);
-    }
-    
-    public void convertDTOReadToAddress(AddressReadDTO addressDTO) {
-    	BeanUtils.copyProperties(addressDTO, this);
-    }
 
 	public Long getId() {
 		return id;

@@ -1,8 +1,5 @@
 package br.ifsp.contacts.dto.address;
 
-import org.springframework.beans.BeanUtils;
-
-import br.ifsp.contacts.model.Address;
 import br.ifsp.contacts.model.Contact;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -28,10 +25,6 @@ public class AddressCreateDTO {
 	private Contact contact;
 	
 	public AddressCreateDTO() {}
-	
-	public void convertAddressToDTO(Address address) {
-		BeanUtils.copyProperties(address, this);
-	}
 
 	public String getRua() {
 		return rua;

@@ -3,10 +3,7 @@ package br.ifsp.contacts.dto.contacts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-
 import br.ifsp.contacts.model.Address;
-import br.ifsp.contacts.model.Contact;
 
 public class ContactReadDTO {
 	
@@ -17,10 +14,6 @@ public class ContactReadDTO {
     private List<Address> addresses = new ArrayList<>();
     
     public ContactReadDTO() {}
-    
-    public void convertContactToDTO(Contact contact) {
-    	BeanUtils.copyProperties(contact, this);
-    }
 
 	public Long getId() {
 		return id;

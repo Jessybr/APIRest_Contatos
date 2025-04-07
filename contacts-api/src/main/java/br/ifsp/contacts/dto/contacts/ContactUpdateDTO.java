@@ -3,13 +3,8 @@ package br.ifsp.contacts.dto.contacts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-
 import br.ifsp.contacts.model.Address;
-import br.ifsp.contacts.model.Contact;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -26,10 +21,6 @@ public class ContactUpdateDTO {
     private List<Address> addresses = new ArrayList<>();
     
     public ContactUpdateDTO() {}
-    
-    public void convertContactToDTO(Contact contact) {
-    	BeanUtils.copyProperties(contact, this);
-    }
     
     public String getNome() {
 		return nome;

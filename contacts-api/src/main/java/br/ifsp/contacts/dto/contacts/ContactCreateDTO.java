@@ -3,17 +3,7 @@ package br.ifsp.contacts.dto.contacts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import br.ifsp.contacts.model.Address;
-import br.ifsp.contacts.model.Contact;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -38,10 +28,6 @@ public class ContactCreateDTO {
     
     public ContactCreateDTO() {
     }
-	
-	public void convertContactToDTO(Contact contact) {
-		BeanUtils.copyProperties(contact, this);
-	}
 
 	public String getNome() {
 		return nome;

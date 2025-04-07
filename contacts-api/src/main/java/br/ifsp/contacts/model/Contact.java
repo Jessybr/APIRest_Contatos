@@ -4,12 +4,8 @@ package br.ifsp.contacts.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import br.ifsp.contacts.dto.contacts.ContactCreateDTO;
-import br.ifsp.contacts.dto.contacts.ContactUpdateDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,11 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "contacts")
@@ -53,14 +44,6 @@ public class Contact {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-    }
-    
-    public void convertDTOInsertToContact(ContactCreateDTO contactDTO) {
-    	BeanUtils.copyProperties(contactDTO, this);
-    }
-    
-    public void convertDTOUpdateToContact(ContactUpdateDTO contactDTO) {
-    	BeanUtils.copyProperties(contactDTO, this);
     }
     
     public Long getId() {

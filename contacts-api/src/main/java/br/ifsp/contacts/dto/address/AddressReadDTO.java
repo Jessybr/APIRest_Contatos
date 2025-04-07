@@ -1,12 +1,10 @@
 package br.ifsp.contacts.dto.address;
 
-import org.springframework.beans.BeanUtils;
-
-import br.ifsp.contacts.model.Address;
 import br.ifsp.contacts.model.Contact;
 
 public class AddressReadDTO {
 	
+	private String id;
 	private String rua;
 	private String cidade;
 	private String estado;
@@ -14,9 +12,13 @@ public class AddressReadDTO {
 	private Contact contact;
 	
 	public AddressReadDTO() {}
-	
-	public void convertAddressToDTO(Address address) {
-		BeanUtils.copyProperties(address, this);
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getRua() {
